@@ -20,8 +20,8 @@ class PersonListWidget extends StatelessWidget {
               imageUrl:
               'https://image.tmdb.org/t/p/w500${person.profilePath}',
               imageBuilder: (context, imageProvider) => Container(
-                height: 150,
-                width: 80,
+                height: MediaQuery.of(context).size.width / 3,
+                width: MediaQuery.of(context).size.width / 3.875,
 
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -45,7 +45,7 @@ class PersonListWidget extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                width: 310,
+          width: MediaQuery.of(context).size.width * 0.7,
                 child: Text(
                   person.name.toString(),
                   overflow: TextOverflow.ellipsis,
@@ -56,7 +56,7 @@ class PersonListWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 310,
+                  width: MediaQuery.of(context).size.width * 0.7,
                 child: Text(
 
                     'Poplarety: ${person.popularity.toString()}',
@@ -64,8 +64,8 @@ class PersonListWidget extends StatelessWidget {
               ),
 
               SizedBox(
-                width: 310,
-                height: 30,
+                width: MediaQuery.of(context).size.width * 0.7,
+
                 child: Text(
                   '${person.knownForDepartment.toString()}',
                   overflow: TextOverflow.clip,
