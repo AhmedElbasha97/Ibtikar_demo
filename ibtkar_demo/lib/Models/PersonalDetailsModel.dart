@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final personsModel = personsModelFromJson(jsonString);
+//     final personalDetailsModel = personalDetailsModelFromJson(jsonString);
 
 import 'dart:convert';
 
-PersonsModel personsModelFromJson(String str) => PersonsModel.fromJson(json.decode(str));
+PersonalDetailsModel personalDetailsModelFromJson(String str) => PersonalDetailsModel.fromJson(json.decode(str));
 
-String personsModelToJson(PersonsModel data) => json.encode(data.toJson());
+String personalDetailsModelToJson(PersonalDetailsModel data) => json.encode(data.toJson());
 
-class PersonsModel {
-  PersonsModel({
+class PersonalDetailsModel {
+  PersonalDetailsModel({
     this.adult,
     this.alsoKnownAs,
     this.biography,
@@ -41,7 +41,7 @@ class PersonsModel {
   double popularity;
   String profilePath;
 
-  factory PersonsModel.fromJson(Map<String, dynamic> json) => PersonsModel(
+  factory PersonalDetailsModel.fromJson(Map<String, dynamic> json) => PersonalDetailsModel(
     adult: json["adult"],
     alsoKnownAs: List<String>.from(json["also_known_as"].map((x) => x)),
     biography: json["biography"],
