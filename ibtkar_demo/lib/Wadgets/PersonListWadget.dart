@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ibtkar_demo/Models/PersonsModel.dart';
-
+import 'package:ibtkar_demo/generated/assets.dart';
 
 class PersonListWidget extends StatelessWidget {
   final Result person;
@@ -39,7 +39,7 @@ class PersonListWidget extends StatelessWidget {
               placeholder: (context, url) =>
                   CircularProgressIndicator(),
               errorWidget: (context, url, error) =>
-                  Icon(Icons.error),
+                  Image.asset('lib/assets/iPhone X, XS, 11 Pro – 1.png'),
             ),
           ),
           Column(
