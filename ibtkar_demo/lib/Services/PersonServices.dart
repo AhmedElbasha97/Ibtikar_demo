@@ -19,7 +19,7 @@ class PersonsService {
   }
 
 
-  Future<PersonalDetailsModel> fetchMovie(int id) async {
+  Future<PersonalDetailsModel> fetchPersonalDetails(int id) async {
     var response = await http.get(
         Uri.parse(
             'https://api.themoviedb.org/3/person/$id?api_key=c949a0e09b06fbc87cacfbef4c504963&language=en-US'));
