@@ -1,4 +1,5 @@
 
+import 'package:ibtkar_demo/Models/ImagesModel.dart';
 import 'package:ibtkar_demo/Models/PersonalDetailsModel.dart';
 import 'package:ibtkar_demo/Models/PersonsModel.dart';
 import 'package:ibtkar_demo/Services/PersonServices.dart';
@@ -15,6 +16,9 @@ class PersonRepository{
 
     return _personsService.fetchPersonalDetails(id);
   }
-  
+  Future<ImagesModel> fetchImages(id) {
+
+    return _personsService.fetchImages(id);
+  }
 
 }
