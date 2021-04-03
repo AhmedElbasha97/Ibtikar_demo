@@ -76,7 +76,27 @@ class Result {
     "popularity": popularity,
     "profile_path": profilePath,
   };
+  Map<String, dynamic> toMap() {
+    return {
+      DbHelper.COLUMN_ID: id,
+      DbHelper.COLUMN_NAME: name,
+      DbHelper.COLUMN_ACT: knownForDepartment,
+      DbHelper.COLUMN_IMG: profilePath,
+      DbHelper.COLUMN_POPULARTY: popularity,
+
+    };
+  }
+
+  factory Result.fromDatabase(Map<String, dynamic> json) => Result(
+      id: json[DbHelper.COLUMN_ID],
+      name: json[DbHelper.COLUMN_NAME],
+      profilePath: json[DbHelper.COLUMN_IMG],
+      knownForDepartment: json[DbHelper.COLUMN_ACT],
+      popularity: json[DbHelper.COLUMN_POPULARTY],
+  );
+
 }
+
 
 class KnownFor {
   KnownFor({
@@ -194,22 +214,4 @@ class EnumValues<T> {
     }
     return reverseMap;
   }
-  Map<String, dynamic> toMap() {
-    return {
-      DbHelper.COLUMN_ID: id,
-      DbHelper.COLUMN_NAME: title,
-      DbHelper.COLUMN_NAME: overview,
-      DbHelper.COLUMN_IMG: posterPath,
-      DbHelper.COLUMN_RATE: voteAverage,
-      DbHelper.COLUMN_RELEASE: releaseDate
-    };
-  }
-
-  factory Movie.fromDatabase(Map<String, dynamic> json) => Movie(
-      id: json[DbHelper.COLUMN_ID],
-      overview: json[DbHelper.COLUMN_BODY],
-      posterPath: json[DbHelper.COLUMN_IMG],
-      title: json[DbHelper.COLUMN_TITLE],
-      voteAverage: json[DbHelper.COLUMN_RATE],
-      releaseDate: json[DbHelper.COLUMN_RELEASE]);
 }
