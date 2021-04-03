@@ -38,7 +38,7 @@ class PersonalDetailsWadgets extends StatelessWidget {
                 placeholder: (context, url) =>
                     CircularProgressIndicator(),
                 errorWidget: (context, url, error) =>
-                    Image.asset('lib/assets/iPhone X, XS, 11 Pro – 1.png'),
+                    Image.asset('lib/assets/download.jpeg'),
               ),
             ),
           ),
