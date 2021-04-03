@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
+import 'package:ibtkar_demo/UI/PersonDetails/PersonalDetailsScreen.dart';
 import 'package:ibtkar_demo/UI/personList/PersonProvider.dart';
 import 'package:ibtkar_demo/Wadgets/PersonListWadget.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +46,12 @@ class _ListScreenState extends State<ListScreen> {
                       PersonListProvider.getPersonsAtFrist();
                     }
 
-                    return PersonListWidget(person: person,index: index);
+                    return GestureDetector(
+                        child: PersonListWidget(person: person,index: index),
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => DetailScreen(personalDetails: person,index: index,id: person.id,)));
+                    },);
                   })
                   : Center(child: CircularProgressIndicator());
             },
