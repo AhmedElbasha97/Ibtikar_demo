@@ -10,16 +10,16 @@ class ImagesProvider extends ChangeNotifier {
 
   PersonRepository _personalDetailsRepository = PersonRepository();
 
-  ImagesProvider(id,imgPath) {
+  PersonalDetailsProvider(id,imgPath) {
     print('id:::$id');
     getPersonalDetails(id,imgPath);
   }
 
   void getPersonalDetails(id,imgPath) {
     _personalDetailsRepository.fetchImages(id).then((newImages) {
-      newImages.profiles.forEach((prof) =>{
-        if(prof.filePath == imgPath){
-          image = prof
+      newImages.profiles.map((profie) =>{
+        if(profie.filePath == imgPath){
+          image = profie
         }
       } );
 
