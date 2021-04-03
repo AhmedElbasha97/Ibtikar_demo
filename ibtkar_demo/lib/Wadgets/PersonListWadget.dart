@@ -1,12 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
 import 'package:ibtkar_demo/Models/PersonsModel.dart';
-import 'package:ibtkar_demo/generated/assets.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
+
 
 class PersonListWidget extends StatelessWidget {
   final Result person;
   final int index;
-  const PersonListWidget({Key key, this.person, this.index}) : super(key: key);
+
+  const PersonListWidget({Key key, this.person, this.index }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return  Card(
@@ -37,7 +40,7 @@ class PersonListWidget extends StatelessWidget {
                 ),
               ),
               placeholder: (context, url) =>
-                  CircularProgressIndicator(),
+                  Image.asset('lib/assets/iPhone X, XS, 11 Pro – 1.png'),
               errorWidget: (context, url, error) =>
                   Image.asset('lib/assets/iPhone X, XS, 11 Pro – 1.png'),
             ),
@@ -67,14 +70,16 @@ class PersonListWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.7,
 
                 child: Text(
-                  '${person.knownForDepartment.toString()}',
+                  '${person.knownForDepartment}',
                   overflow: TextOverflow.clip,
                   softWrap: true,
                   textAlign: TextAlign.left,
                 ),
               ),
+
             ],
           ),
+
         ],
       ),
     );

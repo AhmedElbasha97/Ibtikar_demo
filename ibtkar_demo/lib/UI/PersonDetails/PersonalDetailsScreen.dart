@@ -23,11 +23,12 @@ class DetailScreen extends StatelessWidget {
         child:
         Consumer<PersonalDetailsProvider>(builder: (buildContext, PersonalDetailsProvider, _) {
           final personalDetails = PersonalDetailsProvider.personalDetails;
+          final images =PersonalDetailsProvider.images;
           if (PersonalDetailsProvider.personalDetails != null) {
 
             return SingleChildScrollView(
               child: Center(
-                child: PersonalDetailsWadgets(PersonalDetails: personalDetails,index: index),
+                child: PersonalDetailsWadgets(PersonalDetails: personalDetails,index: index,images: images,),
 
               ),
             );

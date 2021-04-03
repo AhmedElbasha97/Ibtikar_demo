@@ -1,13 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ibtkar_demo/Models/ImagesModel.dart';
 import 'package:ibtkar_demo/Models/PersonalDetailsModel.dart';
 import 'package:ibtkar_demo/UI/ImagesScreen/ImageScreen.dart';
 
 class PersonalDetailsWadgets extends StatefulWidget {
   final PersonalDetailsModel PersonalDetails;
   final int index;
+  final ImagesModel images;
 
-  const PersonalDetailsWadgets({Key key, this.PersonalDetails, this.index}) : super(key: key);
+  const PersonalDetailsWadgets({Key key, this.PersonalDetails, this.index,this.images}) : super(key: key);
 
   @override
   _PersonalDetailsWadgetsState createState() => _PersonalDetailsWadgetsState();
@@ -16,6 +18,7 @@ class PersonalDetailsWadgets extends StatefulWidget {
 class _PersonalDetailsWadgetsState extends State<PersonalDetailsWadgets> {
   @override
   Widget build(BuildContext context) {
+
     return Column(
 
       children: [
@@ -97,7 +100,46 @@ class _PersonalDetailsWadgetsState extends State<PersonalDetailsWadgets> {
           '${widget.PersonalDetails.biography}',
           textAlign: TextAlign.center,
         ),
-
+        GridView.count(
+          physics:
+          NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+          shrinkWrap: true,
+          crossAxisCount: 2,
+          padding: EdgeInsets.all(20.0),
+          childAspectRatio: 6.5 / 8.0,
+          children: widget.images.profiles
+              .map(
+                (img) => GestureDetector(
+              onTap: () {
+                    if(widget.PersonalDetails.profilePath != null) {
+                    print("hi");
+                    Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                    ImageScreen(id: widget.PersonalDetails.id,
+                    imgPath: img.filePath,)));
+                    };
+                    },
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl:
+                'https://image.tmdb.org/t/p/w500${img.filePath}',
+                imageBuilder: (context, imageProvider) => Container(
+                  margin: EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) =>
+                    Icon(Icons.error),
+              ),
+            ),
+          )
+              .toList(),
+        )
       ],
     );
   }

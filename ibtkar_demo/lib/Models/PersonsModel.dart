@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:ibtkar_demo/Local_Storage/db_helper.dart';
+
 PersonsModel personsModelFromJson(String str) => PersonsModel.fromJson(json.decode(str));
 
 String personsModelToJson(PersonsModel data) => json.encode(data.toJson());
@@ -192,4 +194,22 @@ class EnumValues<T> {
     }
     return reverseMap;
   }
+  Map<String, dynamic> toMap() {
+    return {
+      DbHelper.COLUMN_ID: id,
+      DbHelper.COLUMN_NAME: title,
+      DbHelper.COLUMN_NAME: overview,
+      DbHelper.COLUMN_IMG: posterPath,
+      DbHelper.COLUMN_RATE: voteAverage,
+      DbHelper.COLUMN_RELEASE: releaseDate
+    };
+  }
+
+  factory Movie.fromDatabase(Map<String, dynamic> json) => Movie(
+      id: json[DbHelper.COLUMN_ID],
+      overview: json[DbHelper.COLUMN_BODY],
+      posterPath: json[DbHelper.COLUMN_IMG],
+      title: json[DbHelper.COLUMN_TITLE],
+      voteAverage: json[DbHelper.COLUMN_RATE],
+      releaseDate: json[DbHelper.COLUMN_RELEASE]);
 }

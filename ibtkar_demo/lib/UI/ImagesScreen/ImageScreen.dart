@@ -16,73 +16,92 @@ class ImageScreen extends StatefulWidget {
 }
 
 class _ImageScreenState extends State<ImageScreen> {
-  String _message = "";
-  String _path = "";
-  String _size = "";
-  String _mimeType = "";
-  File _imageFile;
-  int _progress = 0;
+
   final id;
   final imgPath;
   List<File> _mulitpleFiles = [];
 
-  _ImageScreenState( this.id, this.imgPath);
+  _ImageScreenState(this.id, this.imgPath);
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    ImageDownloader.callback(onProgressUpdate: (String imageId, int progress) {
-      setState(() {
-        _progress = progress;
-      });
-    });
+
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("download image"),
+        actions: [
+          IconButton(onPressed: () {
+            print("hi imge");
+            showDialog<void>(
+                context: context,
+                // false = user must tap button, true = tap outside dialog
+                builder: (BuildContext dialogContext) {
+                  return AlertDialog(
+                    title: Text('downoad Image'),
+                    content: Text("the image will be on your device localy in download file"),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text('OK'),
+                        onPressed: () {
+                          ImageDownloader.downloadImage(
+                              'https://image.tmdb.org/t/p/w500${widget.imgPath}')
+                              .catchError((error) {
+                            if (error is PlatformException) {
+                              var path = "";
+                              if (error.code == "404") {
+                                print("Not Found Error.");
+                              } else if (error.code == "unsupported_file") {
+                                print("UnSupported FIle Error.");
+                                path = error.details["unsupported_file_path"];
+                              }
+                            }
+                          });
+                          Navigator.of(dialogContext)
+                              .pop();
+                          },
+                      ),
+                      FlatButton(
+                        child: Text('cancel'),
+                        onPressed: () {
+                          Navigator.of(dialogContext)
+                              .pop(); // Dismiss alert dialog
+                        },
+                      ),
+                    ],
+                  );
+                }
+            );
+          }
+    , icon: Icon(Icons.arrow_circle_down))
+        ],
       ),
       body: ChangeNotifierProvider<ImagesProvider>(
-        create: (context) => ImagesProvider(id,imgPath),
+        create: (context) => ImagesProvider(id, imgPath),
         child:
         Consumer<ImagesProvider>(builder: (buildContext, ImagesProvider, _) {
           final image = ImagesProvider.image;
           print(image);
           if (ImagesProvider.image != null) {
-
-            return GestureDetector(
-              onTap: () async {
-                print("hi imge");
-                ImageDownloader.downloadImage('https://image.tmdb.org/t/p/w500${widget.imgPath}').catchError((error) {
-                  if (error is PlatformException) {
-                    var path = "";
-                    if (error.code == "404") {
-                      print("Not Found Error.");
-                    } else if (error.code == "unsupported_file") {
-                      print("UnSupported FIle Error.");
-                      path = error.details["unsupported_file_path"];
-                    }
-                  }
-                });
-              },
-              child: Container(
+            return Container(
                 height: image.height.toDouble(),
                 width: image.width.toDouble(),
                 decoration: BoxDecoration(
-
                   image: DecorationImage(
                     fit: BoxFit.cover,
-
                     image: NetworkImage(
                         'https://image.tmdb.org/t/p/w500${widget.imgPath}'
                     ),
                   ),
 
                 ),
-              ),
-            );
 
+              );
 
           } else {
             return Center(child: CircularProgressIndicator());
@@ -90,87 +109,6 @@ class _ImageScreenState extends State<ImageScreen> {
         }),
       ),
     );
-
   }
 
-  Future<void> _downloadImage(
-      String url, {
-        AndroidDestinationType destination,
-        bool whenError = false,
-        String outputMimeType,
-      }) async {
-    String fileName;
-    String path;
-    int size;
-    String mimeType;
-    try {
-      String imageId;
-
-      if (whenError) {
-        imageId = await ImageDownloader.downloadImage(url,
-            outputMimeType: outputMimeType)
-            .catchError((error) {
-          if (error is PlatformException) {
-            String path = "";
-            if (error.code == "404") {
-              print("Not Found Error.");
-            } else if (error.code == "unsupported_file") {
-              print("UnSupported FIle Error.");
-              path = error.details["unsupported_file_path"];
-            }
-            setState(() {
-              _message = error.toString();
-              _path = path ?? '';
-            });
-          }
-
-          print(error);
-        }).timeout(Duration(seconds: 10), onTimeout: () {
-          print("timeout");
-          return;
-        });
-      } else {
-        if (destination == null) {
-          imageId = await ImageDownloader.downloadImage(
-            url,
-            outputMimeType: outputMimeType,
-          );
-        } else {
-          imageId = await ImageDownloader.downloadImage(
-            url,
-            destination: destination,
-            outputMimeType: outputMimeType,
-          );
-        }
-      }
-
-      if (imageId == null) {
-        return;
-      }
-      fileName = await ImageDownloader.findName(imageId);
-      path = await ImageDownloader.findPath(imageId);
-      size = await ImageDownloader.findByteSize(imageId);
-      mimeType = await ImageDownloader.findMimeType(imageId);
-    } on PlatformException catch (error) {
-      setState(() {
-        _message = error.message ?? '';
-      });
-      return;
-    }
-
-    if (!mounted) return;
-
-    setState(() {
-      var location = Platform.isAndroid ? "Directory" : "Photo Library";
-      _message = 'Saved as "$fileName" in $location.\n';
-      _size = 'size:     $size';
-      _mimeType = 'mimeType: $mimeType';
-      _path = path ?? '';
-
-      if (!_mimeType.contains("video")) {
-        _imageFile = File(path);
-      }
-      return;
-    });
-  }
 }
