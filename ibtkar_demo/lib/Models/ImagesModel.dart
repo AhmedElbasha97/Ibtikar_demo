@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final images = imagesFromJson(jsonString);
+//     final imagesModel = imagesModelFromJson(jsonString);
 
 import 'dart:convert';
 
-Images imagesFromJson(String str) => Images.fromJson(json.decode(str));
+ImagesModel imagesModelFromJson(String str) => ImagesModel.fromJson(json.decode(str));
 
-String imagesToJson(Images data) => json.encode(data.toJson());
+String imagesModelToJson(ImagesModel data) => json.encode(data.toJson());
 
-class Images {
-  Images({
+class ImagesModel {
+  ImagesModel({
     this.id,
     this.profiles,
   });
@@ -17,7 +17,7 @@ class Images {
   int id;
   List<Profile> profiles;
 
-  factory Images.fromJson(Map<String, dynamic> json) => Images(
+  factory ImagesModel.fromJson(Map<String, dynamic> json) => ImagesModel(
     id: json["id"],
     profiles: List<Profile>.from(json["profiles"].map((x) => Profile.fromJson(x))),
   );

@@ -15,6 +15,6 @@ class PersonRepository{
 
     return _personsService.fetchPersonalDetails(id);
   }
-
+  
 
 }
