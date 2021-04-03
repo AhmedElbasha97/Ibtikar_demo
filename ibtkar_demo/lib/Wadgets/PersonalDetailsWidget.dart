@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ibtkar_demo/Models/PersonalDetailsModel.dart';
+import 'package:ibtkar_demo/UI/ImagesScreen/ImageScreen.dart';
 
 class PersonalDetailsWadgets extends StatelessWidget {
   final PersonalDetailsModel PersonalDetails;
@@ -14,8 +15,14 @@ class PersonalDetailsWadgets extends StatelessWidget {
       children: [
         GestureDetector(
           onTap:() {
-            print("hi");
-          },
+            if(PersonalDetails.profilePath != null) {
+              print("hi");
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) =>
+                      ImageScreen(id: PersonalDetails.id,
+                        imgPath: PersonalDetails.profilePath,)));
+            }
+            },
           child: Hero(
             tag: 'imageHero$index',
 
