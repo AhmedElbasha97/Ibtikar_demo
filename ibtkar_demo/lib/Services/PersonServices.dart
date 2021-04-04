@@ -10,8 +10,9 @@ class PersonsService {
     final response = await http.get(Uri.parse(
         'https://api.themoviedb.org/3/person/popular?api_key=c949a0e09b06fbc87cacfbef4c504963&language=en-US&page=${page}'));
     if (response.statusCode == 200) {
-      print(List<Result>.from((json.decode(response.body)["results"] as List)
-          .map((e) => Result.fromJson((e)))).toList());
+      var per=List<Result>.from((json.decode(response.body)["results"] as List)
+          .map((e) => Result.fromJson((e)))).toList();
+      print(per[1].gender);
       return List<Result>.from((json.decode(response.body)["results"] as List)
           .map((e) => Result.fromJson((e)))).toList();
     } else {

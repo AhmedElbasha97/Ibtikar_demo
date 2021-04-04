@@ -70,7 +70,7 @@ class PersonListWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.7,
 
                 child: Text(
-                  '${person.knownForDepartment}',
+                  'Gender:${decideGender(person.gender)}',
                   overflow: TextOverflow.clip,
                   softWrap: true,
                   textAlign: TextAlign.left,
@@ -84,5 +84,13 @@ class PersonListWidget extends StatelessWidget {
       ),
     );
 
+  }
+}
+
+decideGender(id) {
+  if(id == 1){
+    return 'Female';
+  }else{
+    return'Male';
   }
 }

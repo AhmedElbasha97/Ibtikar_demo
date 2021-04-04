@@ -80,7 +80,7 @@ class Result {
     return {
       DbHelper.COLUMN_ID: id,
       DbHelper.COLUMN_NAME: name,
-      DbHelper.COLUMN_ACT: knownForDepartment,
+      DbHelper.COLUMN_GENDER: gender,
       DbHelper.COLUMN_IMG: profilePath,
       DbHelper.COLUMN_POPULARTY: popularity,
 
@@ -91,7 +91,7 @@ class Result {
       id: json[DbHelper.COLUMN_ID],
       name: json[DbHelper.COLUMN_NAME],
       profilePath: json[DbHelper.COLUMN_IMG],
-      knownForDepartment: json[DbHelper.COLUMN_ACT],
+      gender: json[DbHelper.COLUMN_GENDER],
       popularity: json[DbHelper.COLUMN_POPULARTY],
   );
 
